@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.curso.camel</groupId>
+    <artifactId>helloworld-maven</artifactId>
+    <version>1.0.0</version>
+
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+    </properties>
+
+    <!-- Añadimos las dependencias que necesitamos usar
+    <dependencies>
+    </dependency>
+    -->
+
+    <!-- Añadimos los plugins que necesitamos usar
+    <build>
+        <plugins>
+        </plugins>  
+    </build>
+    -->
+</project>
