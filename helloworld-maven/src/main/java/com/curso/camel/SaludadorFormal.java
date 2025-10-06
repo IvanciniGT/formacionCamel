@@ -1,6 +1,6 @@
 package com.curso.camel;
 
-import org.springframework.stereotype.Component;
+//import org.springframework.stereotype.Component;
 
 //@Component // Spring, cuando alguien solicite un Saludador, le entregas una instancia de esta clase.
 public class SaludadorFormal implements Saludador {
