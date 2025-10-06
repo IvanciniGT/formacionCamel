@@ -1,0 +1,134 @@
+
+
+# YAML es un lenguaje de estructuración de datos muy usado hoy en día: 
+# Spring
+# Kubernetes
+# Ansible
+# Docker Compose
+# Gitlab CI/CD, github actions
+# Configuración de red ubuntu
+
+# Es una alternativa a XML o JSON... de hecho se ha tragado literalmente JSON (JSON hoy en día es un subconjunto de la spec de YAML 1.2)
+# Está pensado para seres humanos, no para máquinas.
+# tiene además muchas funcionalidades con las que ni XML ni JSON pueden competir.
+
+---
+
+# Dentro de un fichero YAML podemos tener varios documentos separados por ---.
+# De hecho --- es la marca de inicio de un documento YAML.
+# Es obligatoria salvo en el primer documento del fichero.
+# Un documento yaml es un nodo.
+# Y en yaml hay 2 tipos de nodos: nodos escalares y nodos de colección.
+# Los escalares son valores sueltos: cadenas, números, booleanos, nulos.
+# Los nodos de colección son listas y mapas (diccionarios, objetos, hashes...)... y más
+---
+# Número
+3
+---
+-3.12
+---
+# Booleanos
+True # true, True, TRUE
+---
+false # false, False, FALSE
+---
+# Textos... con diferencia lo más complejo de YAML
+Hola "soy 'un texto \\escrito 
+
+en # lenguaje YAML
+---
+"Hola \"soy 'un texto \\escrito 
+
+en # lenguaje YAML"
+# La contrabarra solo funciona como caracter de escape dentro de comillas dobles
+# \n \t \r \\ \"
+---
+'Hola "soy ''un texto \\escrito 
+
+en # lenguaje YAML'
+---
+# Decisión: SIEMPRE PONEMOS LOS TEXTOS SIN COMILLAS,
+# A no ser que algún caracter especial lo requiera
+# Y además, solo usamos estas sintaxis para textos de una sola línea
+
+---
+# Yaml tiene 2 sintaxis adicionales para textos multilínea
+# Literal:
+|2-
+   Hola "soy 'un texto \escrito 
+  en # lenguaje YAML
+  en varias líneas
+
+  con sangrado
+  y saltos de línea
+  y "ñ:'# y más"
+---
+# Plegado FOLDED
+>-
+    Hola "soy 'un texto \escrito 
+    en # lenguaje YAML
+    en varias líneas
+  
+    con sangrado
+    y saltos de línea
+    y "ñ:'# y más"
+---
+# Listas ordenadas
+- Item 1
+- true
+- 33
+- 
+                - Subitem 1
+                - Subitem 2
+                - 3
+                - false
+- - Subitem 1
+  - Subitem 2
+  - 3
+  - false
+
+---
+- item1
+- 22
+- True
+---
+["item1", 22, true] # Esta sintaxis está TOTALMENTE DESACONSEJADA EN YAML
+# Está por 2 motivos: 
+# 1. Compatibilidad con JSON
+# Para un caso muy especial que no puede representarse con los guiones: 
+# LISTAS VACÍAS: []
+---
+# Mapas desordenados (MAP de java. Colecciones clave / valor)
+clave1: valor1
+clave2: 22
+clave3: true
+clave4:
+  - item1
+  - item2
+  - item3
+clave5:
+  subclave1: subvalor1
+  subclave2: 3.14
+---
+# Hay una sintaxis alternativa para los mapas que está totalmente desaconsejada en YAML
+{clave1: valor1, clave2: 22, clave3: true}
+# Está por 2 motivos: 
+# 1. Compatibilidad con JSON
+# 2. Para un caso muy especial que no puede representarse con los guiones: 
+# MAPAS VACÍOS: {}
+---
+# Nota, los mapas son desordenados:
+a: 1  
+b: 2
+c: 3
+---
+c: 3
+a: 1
+b: 2
+# Desde el punto de vista de YAML son iguales
+---
+# Cada programa que usa yaml impone una estructura concreta a los nodos
+# Eso es lo que se conoce como un ESQUEMA
+# Spring tiene su propio esquema para sus ficheros de configuración
+# Y exige a primer nivel un mapa desordenado
+# Spring tiene algunas claves reservadas, que se usan para configuraciones de más alto nivel de nuestro proyecto
