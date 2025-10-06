@@ -18,3 +18,4 @@ public class SaludadorFormal implements Saludador {
 }
 
 // Yo , oh creador del SaludadorFormal... DIGO QUE SOY EL SALUDADOR QUE DEBE USARSE EN LA APLICACION !
+// new SaludadorFormal() // Este código, si esto se está ejecutando, lo ha escrito alguien? SPRING... Lo vemos por algún sitio? NO

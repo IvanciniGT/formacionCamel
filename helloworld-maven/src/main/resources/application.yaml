@@ -1,0 +1,12 @@
+saludador:
+  informal:
+    plantilla:  Hola %s, qué más pues?
+    contador:   federico
+  formal:
+    plantilla:  Buenos días, %s. Un placer saludarle.
+
+# El mismo archivo en formato .properties
+
+# saludador.informal.plantilla=Hola %s, ¿qué más pues?
+# saludador.informal.contador=federico
+# saludador.formal.plantilla=Buenos días, %s. Un placer saludarle.

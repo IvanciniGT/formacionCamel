@@ -10,6 +10,8 @@
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
+        <!-- El juego de caracteres es UTF-8 en nuestros ficheros fuente -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <!-- Añadimos las dependencias que necesitamos usar-->

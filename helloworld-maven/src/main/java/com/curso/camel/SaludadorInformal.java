@@ -4,7 +4,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.Primary;
 import org.springframework.beans.factory.annotation.Qualifier;
-
+import org.springframework.context.annotation.Lazy;
+import org.springframework.beans.factory.annotation.Value;
 @Component
 // Esto ahora mismo solo genera una instancia del saludador. 
 // Podemos hacer que se genera una instancia cada vez que se solicite un saludador?
@@ -31,13 +32,18 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 public class SaludadorInformal implements Saludador {
 
-    public SaludadorInformal() {
-        System.out.println("Creando una instancia de SaludadorInformal");
+    //private final Impresor impresor;
+    private final String plantillaDeSaludo; // Esta variable la rellenamos pidiendo a Spring que lea el valor de su fichero de propiedades
+
+    public SaludadorInformal( @Value("${saludador.informal.plantilla}") String plantillaDeSaludo ){ // @Lazy Impresor impresor ) {
+        System.out.println("Creando una instancia de SaludadorInformal con impresor: " );
+        this.plantillaDeSaludo = plantillaDeSaludo;
+        //this.impresor = impresor;
     }
 
     @Override
     public String generarSaludo(String nombrePersona) {
-        return "Hola " + nombrePersona + ", ¿qué tal?";
+        return String.format(plantillaDeSaludo, nombrePersona);
     }
 
 }
