@@ -350,3 +350,50 @@ public class MiClase {
     }
 }
 ```
+
+
+---
+
+# Primeros pasitos con Apache Camel.
+
+En apache camel el concepto principal es la RUTA.
+
+Una ruta es un flujo de datos que va desde un punto A a un punto B.
+
+Las rutas tienen un origen (from) y un destino (to).
+Y entre el origen y el destino pueden haber 0 o más pasos intermedios (procesadores), además podremos hacer bifurcaciones, unir flujos, filtrar datos, transformar datos, agrupar datos....
+
+```java
+
+miFuncionQueDefineUnaRutaCamel(){
+    from("ALGO????")
+    .process("ALGO???")
+    .to("ALGO???");
+}
+```
+En los from y los to, lo que ponemos son textos. Estos textos son URIS.
+Estos URIS tienen una sintaxis concreta.
+La sintaxis es: protocolo:datos?parametros
+
+Los protocolos son gestionados por distintos componentes que ofrece camel.
+Ejemplos de protocolos:
+- file
+- ftp
+- http
+- jms
+- seda
+- direct
+- timer
+- log
+- ....
+
+Y cada uno de esos protocolos/componentes suele ir en su propia librería, que habrá que añadir a nuestro proyecto.
+
+Esto en cuanto a los from y los to.
+
+En cuanto a los procesadores, camel nos ofrece 2 formas de definirlos:
+- Mediante clases que implementen la interfaz Processor
+- Mediante funciones lambda
+
+Si son cosas fáciles, usaremos funciones lambda.
+Si son cosas complejas, usaremos clases que implementen la interfaz Processor.

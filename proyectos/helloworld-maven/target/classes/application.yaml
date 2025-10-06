@@ -10,3 +10,7 @@ saludador:
 # saludador.informal.plantilla=Hola %s, ¿qué más pues?
 # saludador.informal.contador=federico
 # saludador.formal.plantilla=Buenos días, %s. Un placer saludarle.
+camel:
+  springboot:
+    main-run-controller: true # Esto le indica a Spring que debe mantener la app en ejecución... 
+                              # que camel tiene configuradas rutas,... que se quedan corriendo como un servicio

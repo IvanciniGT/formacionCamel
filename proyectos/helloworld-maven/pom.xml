@@ -12,15 +12,23 @@
         <maven.compiler.target>21</maven.compiler.target>
         <!-- El juego de caracteres es UTF-8 en nuestros ficheros fuente -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.boot.version>3.5.6</spring.boot.version>
+        <camel.version>4.10.7</camel.version>
     </properties>
-
+    
     <!-- Añadimos las dependencias que necesitamos usar-->
     <dependencies>
         <!-- Esto me añade las librerias necesarias de spring... las más básicas -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-            <version>3.5.6</version>
+            <version>${spring.boot.version}</version>
+        </dependency>
+        <!-- Librerías básicas de Camel, y su integración con Spring Boot -->
+        <dependency>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-spring-boot-starter</artifactId>
+            <version>${camel.version}</version>
         </dependency>
     </dependencies>
 
@@ -34,7 +42,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>3.5.6</version>
+                <version>${spring.boot.version}</version>
             </plugin>
         </plugins>  
     </build>
