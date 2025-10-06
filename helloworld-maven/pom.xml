@@ -12,15 +12,29 @@
         <maven.compiler.target>21</maven.compiler.target>
     </properties>
 
-    <!-- Añadimos las dependencias que necesitamos usar
+    <!-- Añadimos las dependencias que necesitamos usar-->
     <dependencies>
-    </dependency>
-    -->
+        <!-- Esto me añade las librerias necesarias de spring... las más básicas -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>3.5.6</version>
+        </dependency>
+    </dependencies>
 
-    <!-- Añadimos los plugins que necesitamos usar
+    <!-- Añadimos los plugins que necesitamos usar -->
     <build>
         <plugins>
+            <!-- 
+            Esto me da la capacidad de ejecutar desde maven apps spring:
+              $ mvn spring-boot:run
+            -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.5.6</version>
+            </plugin>
         </plugins>  
     </build>
-    -->
+    
 </project>
