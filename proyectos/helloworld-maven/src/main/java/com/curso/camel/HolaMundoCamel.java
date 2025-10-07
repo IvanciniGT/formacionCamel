@@ -21,6 +21,7 @@ public class HolaMundoCamel extends RouteBuilder {
  
     private int contador = 0;
     private final Processor procesadorBaconIpsum;
+    private long ultimoMensajeLogueado = 0;
     
     // Constructor para inyección de dependencias
     public HolaMundoCamel(@Qualifier("ProcesadorRuta2") Processor procesadorBaconIpsum) {
@@ -150,6 +151,19 @@ public class HolaMundoCamel extends RouteBuilder {
                     .setHeader("Motivo", constant("No es ni TIPO 1 ni TIPO 2")) // procesamiento adicional
                     .to("log:RUTA-4-OTRO?showAll=true")
             .end();
+        // Genera mensajes cada 100ms... que deposita (to) en un log
+        // Pero.. cada 2 segundos, queremos que se loggué un mensaje en el log (log())
+        // Lo primero que nos hace falta es saber cuando fue el último mensaje que sacamos por el log
+        // necesitamos una variable para ello.
+        from("timer:timer-ruta-5?period=100")
+            // Quiero para monitorizar mostrar mensajes cada 2 segundos
+            .choice()
+                .when(exchange -> System.currentTimeMillis() - 2000 > this.ultimoMensajeLogueado )
+                    .process( exchange -> this.ultimoMensajeLogueado = System.currentTimeMillis() )
+                    .log("${exchangeId}") // Simplemente quiero que muestre ese dato en log... pero que luego me deje seguir procesando
+            .end()
+            .to("log:RUTA-5-SALIDA");
+
 
 
     }
