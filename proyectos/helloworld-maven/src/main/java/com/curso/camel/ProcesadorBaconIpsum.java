@@ -5,6 +5,7 @@ import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -16,8 +17,18 @@ import java.time.Duration;
 @Qualifier("ProcesadorRuta2")
 public class ProcesadorBaconIpsum implements Processor {
 
-    public ProcesadorBaconIpsum() {
-        System.out.println("Creando una instancia de ProcesadorBaconIpsum");
+    private final String urlBaconIpsum;
+    private final int timeoutConexion;
+    private final int timeoutLectura;
+
+    public ProcesadorBaconIpsum(
+            @Value("${bacon.ipsum.url}") String urlBaconIpsum,
+            @Value("${bacon.ipsum.timeout.conexion:5}") int timeoutConexion,
+            @Value("${bacon.ipsum.timeout.lectura:10}") int timeoutLectura) {
+        this.urlBaconIpsum = urlBaconIpsum;
+        this.timeoutConexion = timeoutConexion;
+        this.timeoutLectura = timeoutLectura;
+        System.out.println("Creando ProcesadorBaconIpsum con URL: " + urlBaconIpsum);
     }
 
     @Override
@@ -48,15 +59,15 @@ public class ProcesadorBaconIpsum implements Processor {
     }
 
     private String obtenerBaconIpsum() throws Exception {
-        // Crear el cliente HTTP moderno con configuración
+        // Crear el cliente HTTP moderno con configuración desde propiedades
         HttpClient cliente = HttpClient.newBuilder()
-                .connectTimeout(Duration.ofSeconds(5))
+                .connectTimeout(Duration.ofSeconds(timeoutConexion))
                 .build();
         
-        // Construir la petición usando el patrón builder
+        // Construir la petición usando el patrón builder con URL configurable
         HttpRequest peticion = HttpRequest.newBuilder()
-                .uri(URI.create("https://baconipsum.com/api/?type=all-meat&paras=3&format=text"))
-                .timeout(Duration.ofSeconds(10))
+                .uri(URI.create(urlBaconIpsum))
+                .timeout(Duration.ofSeconds(timeoutLectura))
                 .header("User-Agent", "CamelFormacion/1.0")
                 .GET()
                 .build();
