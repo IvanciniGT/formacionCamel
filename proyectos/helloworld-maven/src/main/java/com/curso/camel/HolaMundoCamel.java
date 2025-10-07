@@ -88,8 +88,20 @@ public class HolaMundoCamel extends RouteBuilder {
        .process(procesadorBaconIpsum)  // Usar el procesador inyectado que obtiene contenido de BaconIpsum
        .to("log:RUTA-2?showAll=true");  // Muestra to do el mensaje
 
-    }
 
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // RUTA 3
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Queremos una ruta que genere mensajes cada 2 segundos 
+    // A cada mensaje le ponemos un header... TIPO 1 o TIPO 2 (alternando)
+    // Y escribimos a log
+
+
+    }
+    // PREGUNTA!
+    // Le veis alguna gracia a esto de los BEANS en CAMEL? PRUEBAS !
 }
 
 // RECETAS PARA USAR UNA IA para escribir código:
