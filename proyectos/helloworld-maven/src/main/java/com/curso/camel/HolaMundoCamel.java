@@ -9,6 +9,8 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
 
+import java.io.File;
+
     // Camel tiene una integración muy desarrollada con Spring Boot.
     // Podemos definir rutas Camel como componentes de Spring.
     // Para esto solo tendremos que hacer un par de cosas:
@@ -165,10 +167,47 @@ public class HolaMundoCamel extends RouteBuilder {
             .to("log:RUTA-5-SALIDA");
 
 
+        // Vamos a cambiar el componente de destino... en lugar de un log, a un fichero.
+        // Ese fichero habrá que guardarlo en una carpeta que exista en el sistema de ficheros
+        // La carpeta la podría crear desde java:
+        String nombreCarpeta = "./ficheros-salida";
+        boolean lista = createFolder(nombreCarpeta);
+        if (lista) {
+            from("timer:timer-ruta-6?period=1000")
+                .setHeader("Nombre-Fichero", () -> "fichero-" + System.currentTimeMillis() + ".txt")
+                .setBody(simple("Mensaje generado a las ${date:now:yyyy-MM-dd HH:mm:ss}"))
+                .to("file:" + nombreCarpeta + "?fileName=${header.Nombre-Fichero}&charset=utf-8");
+        }
+
+        // Vamos a por otraq ruta... que ya no genere mensajes cada X segundos... sino que lea los archivos de un directorio
+        // Cada vez que haya un fichero nuevo en ese directorio, lo procese 
+
+        from("file:" + nombreCarpeta + "?delete=true&initialDelay=2000&delay=1000")
+            .log("Procesando fichero: ${header.CamelFileName} con contenido: ${body}")
+            .to("log:RUTA-7-FICHEROS?showAll=true");
+
+
+
 
     }
     // PREGUNTA!
     // Le veis alguna gracia a esto de los BEANS en CAMEL? PRUEBAS !
+
+
+    private static boolean createFolder(String nombreCarpeta){
+        File carpeta = new File(nombreCarpeta);
+        boolean lista = carpeta.exists();
+        if (!lista) {
+            lista = carpeta.mkdirs();
+            if (lista) {
+                System.out.println("Carpeta creada: " + carpeta.getAbsolutePath());
+            } else {
+                System.err.println("No se ha podido crear la carpeta: " + carpeta.getAbsolutePath());
+            }
+        } 
+        return lista;
+
+    }
 }
 
 // RECETAS PARA USAR UNA IA para escribir código:
