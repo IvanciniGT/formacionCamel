@@ -127,6 +127,30 @@ public class HolaMundoCamel extends RouteBuilder {
                 .to("log:RUTA-3-OTRO?showAll=true")
         .end(); // Fin del enrutado condicional
 
+        /// Qué estamos usando para enrutar? En base a qué enrutamos.? Al header.
+        // El header tiene una cosita... Se manda al to().... y al final al sistema destino.
+        // Y si no quiero? Una cosa que podemos hacer es usar otro concepto del que hablamos antes: Properties
+        // Propiedades del exchange
+        // El exchange tiene unas propiedades que son como unos headers pero que no se envían al destino.
+        // Son para uso interno en la ruta.
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+        // RUTA 4
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+        // Trabajando con properties del exchange
+        from("timer:timer-ruta-4?period=1000")
+            .setProperty("Tipo-Mensaje", () ->  "TIPO " + (contador++ % 3))
+            .log("${exchangeProperty.Tipo-Mensaje}") // Simplemente quiero que muestre ese dato en log... pero que luego me deje seguir procesando
+            .choice()
+                .when(exchange -> "TIPO 1".equals(exchange.getProperty("Tipo-Mensaje")))
+                    .to("log:RUTA-4-TIPO-1?showAll=true")
+                .when(exchange -> "TIPO 2".equals(exchange.getProperty("Tipo-Mensaje")))
+                    .to("log:RUTA-4-TIPO-2?showAll=true")
+                .otherwise()
+                    .setHeader("Motivo", constant("No es ni TIPO 1 ni TIPO 2")) // procesamiento adicional
+                    .to("log:RUTA-4-OTRO?showAll=true")
+            .end();
+
 
     }
     // PREGUNTA!
