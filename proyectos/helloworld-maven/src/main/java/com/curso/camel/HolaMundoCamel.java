@@ -97,6 +97,35 @@ public class HolaMundoCamel extends RouteBuilder {
     // Queremos una ruta que genere mensajes cada 2 segundos 
     // A cada mensaje le ponemos un header... TIPO 1 o TIPO 2 (alternando)
     // Y escribimos a log
+    from("timer:timer-ruta-3?period=2000")
+        .setHeader("Tipo-Mensaje", () ->  "TIPO " + (contador++ % 3))
+        // Con lenguaje simple
+        //.setHeader("Tipo-Mensaje", simple("${exchangeId} % 2 == 0 ? 'TIPO 1' : 'TIPO 2'"))
+
+        // FILTRADO... me quiero quedar solo con mensajes de TIPO 1
+        // Si añado varios filtros, se deben cumplir todos y cada uno de ellos.
+        // SON ANDs
+        // Definimos en el filtro lo que quiero mantener
+        //.filter(header("Tipo-Mensaje").isEqualTo("TIPO 1")) // De nuevo aquí tenemos sintaxis de esa edulcorada.. muy específica de Camel
+        // Si no existiera esa sintaxis... podríamos usar una expresión lambda
+        //.filter(exchange -> "TIPO 1".equals(exchange.getIn().getHeader("Tipo-Mensaje")))
+        //.to("log:RUTA-3?showAll=true");
+
+        // Algo diferente a los filtros, sería el enrutado.
+        // Los mensajes de tipo 1, al log de tipo 1
+        // Los mensajes de tipo 2, al log de tipo 2
+        // El resto a un log de tipo OTRO
+        .choice() // Inicio del enrutado condicional. Nos permite establecer distintos flujos de procesamiento de datos.
+        // No solo distintos TO, sino también distintos procesamientos en base a algo
+            .when(header("Tipo-Mensaje").isEqualTo("TIPO 1"))
+                .to("log:RUTA-3-TIPO-1?showAll=true")
+            //.when(header("Tipo-Mensaje").isEqualTo("TIPO 2")) // En lugar de con sintaxis DSL, con una lambda
+            .when(exchange -> "TIPO 2".equals(exchange.getIn().getHeader("Tipo-Mensaje")))
+                .to("log:RUTA-3-TIPO-2?showAll=true")
+            .otherwise()
+                .setHeader("Motivo", constant("No es ni TIPO 1 ni TIPO 2")) // procesamiento adicional
+                .to("log:RUTA-3-OTRO?showAll=true")
+        .end(); // Fin del enrutado condicional
 
 
     }
