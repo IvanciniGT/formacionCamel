@@ -2,6 +2,7 @@ package com.curso.camel;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
+
 @Configuration // Le indica a Spring que esta clase contiene configuraciones y componentes
 public class ConfiguradorDeSaludadorFormal {
 
