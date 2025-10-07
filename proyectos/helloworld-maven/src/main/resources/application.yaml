@@ -17,6 +17,19 @@ bacon:
     timeout:
       conexion: 5  # segundos
       lectura: 10  # segundos
+    # Configuración de proxy (opcional - para entornos corporativos)
+    proxy:
+      enabled: false
+      host: ""      # Ej: "proxy.empresa.com"
+      port: 0       # Ej: 8080
+      # usuario: ""   # Si requiere autenticación (pendiente implementar)
+      # password: ""  # Si requiere autenticación (pendiente implementar)
+
+# NOTA: Para activar el proxy, cambiar enabled a true y configurar host y port
+# Ejemplo para entorno corporativo:
+# bacon.ipsum.proxy.enabled=true
+# bacon.ipsum.proxy.host=proxy.empresa.com  
+# bacon.ipsum.proxy.port=8080
 
 camel:
   springboot:

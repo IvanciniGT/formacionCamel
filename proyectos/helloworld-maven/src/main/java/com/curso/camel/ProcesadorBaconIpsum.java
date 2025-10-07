@@ -11,6 +11,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.net.InetSocketAddress;
+import java.net.ProxySelector;
 import java.time.Duration;
 
 @Component
@@ -20,15 +22,28 @@ public class ProcesadorBaconIpsum implements Processor {
     private final String urlBaconIpsum;
     private final int timeoutConexion;
     private final int timeoutLectura;
+    private final boolean proxyEnabled;
+    private final String proxyHost;
+    private final int proxyPort;
 
     public ProcesadorBaconIpsum(
             @Value("${bacon.ipsum.url}") String urlBaconIpsum,
             @Value("${bacon.ipsum.timeout.conexion:5}") int timeoutConexion,
-            @Value("${bacon.ipsum.timeout.lectura:10}") int timeoutLectura) {
+            @Value("${bacon.ipsum.timeout.lectura:10}") int timeoutLectura,
+            @Value("${bacon.ipsum.proxy.enabled:false}") boolean proxyEnabled,
+            @Value("${bacon.ipsum.proxy.host:}") String proxyHost,
+            @Value("${bacon.ipsum.proxy.port:0}") int proxyPort) {
         this.urlBaconIpsum = urlBaconIpsum;
         this.timeoutConexion = timeoutConexion;
         this.timeoutLectura = timeoutLectura;
+        this.proxyEnabled = proxyEnabled;
+        this.proxyHost = proxyHost;
+        this.proxyPort = proxyPort;
+        
         System.out.println("Creando ProcesadorBaconIpsum con URL: " + urlBaconIpsum);
+        if (proxyEnabled) {
+            System.out.println("Proxy configurado: " + proxyHost + ":" + proxyPort);
+        }
     }
 
     @Override
@@ -60,9 +75,17 @@ public class ProcesadorBaconIpsum implements Processor {
 
     private String obtenerBaconIpsum() throws Exception {
         // Crear el cliente HTTP moderno con configuración desde propiedades
-        HttpClient cliente = HttpClient.newBuilder()
-                .connectTimeout(Duration.ofSeconds(timeoutConexion))
-                .build();
+        HttpClient.Builder clienteBuilder = HttpClient.newBuilder()
+                .connectTimeout(Duration.ofSeconds(timeoutConexion));
+        
+        // Configurar proxy si está habilitado
+        if (proxyEnabled && proxyHost != null && !proxyHost.isEmpty() && proxyPort > 0) {
+            ProxySelector proxySelector = ProxySelector.of(new InetSocketAddress(proxyHost, proxyPort));
+            clienteBuilder.proxy(proxySelector);
+            System.out.println("Usando proxy: " + proxyHost + ":" + proxyPort);
+        }
+        
+        HttpClient cliente = clienteBuilder.build();
         
         // Construir la petición usando el patrón builder con URL configurable
         HttpRequest peticion = HttpRequest.newBuilder()

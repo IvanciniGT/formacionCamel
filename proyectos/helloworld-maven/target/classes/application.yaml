@@ -10,6 +10,14 @@ saludador:
 # saludador.informal.plantilla=Hola %s, ¿qué más pues?
 # saludador.informal.contador=federico
 # saludador.formal.plantilla=Buenos días, %s. Un placer saludarle.
+# Configuración para el procesador BaconIpsum
+bacon:
+  ipsum:
+    url: "https://baconipsum.com/api/?type=all-meat&paras=3&format=text"
+    timeout:
+      conexion: 5  # segundos
+      lectura: 10  # segundos
+
 camel:
   springboot:
     main-run-controller: true # Esto le indica a Spring que debe mantener la app en ejecución... 
