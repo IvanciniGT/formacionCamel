@@ -5,3 +5,4 @@ com/curso/camel/ConfiguradorDeSaludadorFormal.class
 com/curso/camel/Saludador.class
 com/curso/camel/SaludadorInformal.class
 com/curso/camel/SaludadorFormal.class
+com/curso/camel/ProcesadorBaconIpsum.class

@@ -3,6 +3,7 @@ package com.curso.camel;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
@@ -19,6 +20,13 @@ import org.apache.camel.Processor;
 public class HolaMundoCamel extends RouteBuilder {
  
     private int contador = 0;
+    private final Processor procesadorBaconIpsum;
+    
+    // Constructor para inyección de dependencias
+    public HolaMundoCamel(@Qualifier("ProcesadorRuta2") Processor procesadorBaconIpsum) {
+        this.procesadorBaconIpsum = procesadorBaconIpsum;
+        System.out.println("HolaMundoCamel creado con ProcesadorBaconIpsum inyectado");
+    }
 
     @Override
     public void configure() throws Exception { // Aquí, dentro de configure definiremos la ruta.
@@ -77,8 +85,23 @@ public class HolaMundoCamel extends RouteBuilder {
         // La inyectaremos aquí... con un qualificador para que sepa qué clase inyectar... porque es más que probable que tengamos
         // muchos componentes de tipo Processor (Componente procesor admisibles por esta ruta: @ProcesadorRuta2)
 
+       .process(procesadorBaconIpsum)  // Usar el procesador inyectado que obtiene contenido de BaconIpsum
        .to("log:RUTA-2?showAll=true");  // Muestra to do el mensaje
 
     }
 
 }
+
+// RECETAS PARA USAR UNA IA para escribir código:
+// 1. No dejar a la IA que escriba ni una triste linea de código que no hayáis revisado previamente
+// 2. No dejar a la IA que escriba ni una triste linea de código sin que tenga un buen CONTEXTO
+//.    No me importa estar 10 minutos hablando con la IA... sin que haga nada... Solo que me entienda lo que quiero.
+// 3. Quitarle importancia al prompt... NO ES LO IMPORTANTE !
+//    En el prompt le pido lo que quiero... le doy la orden.
+
+
+// UNA IA se alimenta de un prompt y de un CONTEXTO
+// El CONTEXTO es lo importante... es lo que va a permitir que la IA genere
+// EL CONTEXTO ES:
+// - LO QUE TIENE LA IA DE ACCESO A MI CÓDIGO: Mi proyecto, mis clases, mis ficheros de configuración, mis dependencias, etc
+// - El historial de mi conversación con ella
