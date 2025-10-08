@@ -1,8 +1,9 @@
 package com.curso.camel.processor.dni;
 
 import org.apache.camel.Processor;
-import org.springframework.stereotype.Component;
 
-// Un processor es una interfaz que debe implementar la función process(Exchange exchange)
-@Component
-public interface DNIProcessor extends Processor { }
+public interface DNIProcessor extends Processor {
+
+    String DNI_PROCESSOR_EXCHANGE_PROPERTY_NAME = "DniValido";
+
+}
