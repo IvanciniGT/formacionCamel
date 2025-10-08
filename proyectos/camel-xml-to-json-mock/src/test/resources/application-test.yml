@@ -1,0 +1,14 @@
+# Configuración para tests
+app:
+  input:
+    path: "file:src/test/resources/test-data/input"
+  output:
+    path: "file:target/test-output"
+
+# Configuración de logging para tests
+logging:
+  level:
+    com.example.camel: DEBUG
+    org.apache.camel: WARN
+    org.springframework: WARN
+    org.apache.camel.test: INFO

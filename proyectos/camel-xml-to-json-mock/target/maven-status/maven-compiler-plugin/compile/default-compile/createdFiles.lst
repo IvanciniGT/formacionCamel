@@ -1,0 +1,4 @@
+com/example/camel/processor/PersonDataProcessor.class
+com/example/camel/model/Person.class
+com/example/camel/routes/XmlToJsonTransformRoute.class
+com/example/camel/CamelXmlToJsonApplication.class

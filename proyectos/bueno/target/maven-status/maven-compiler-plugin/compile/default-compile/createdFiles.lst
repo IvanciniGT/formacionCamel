@@ -1,0 +1,7 @@
+com/curso/camel/Aplicacion.class
+com/curso/camel/processor/edad/EdadProcessor.class
+com/curso/camel/model/PersonaOut$DatosContacto.class
+com/curso/camel/model/PersonaIn.class
+com/curso/camel/model/PersonaOut$Direccion.class
+com/curso/camel/processor/dni/DNIProcessor.class
+com/curso/camel/model/PersonaOut.class

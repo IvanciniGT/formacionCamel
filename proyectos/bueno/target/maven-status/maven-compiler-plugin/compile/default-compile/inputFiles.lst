@@ -1,0 +1,5 @@
+/Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/Aplicacion.java
+/Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/model/PersonaIn.java
+/Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/model/PersonaOut.java
+/Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/processor/dni/DNIProcessor.java
+/Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/processor/edad/EdadProcessor.java

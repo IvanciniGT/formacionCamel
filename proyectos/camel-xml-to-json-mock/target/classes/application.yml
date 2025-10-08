@@ -1,0 +1,36 @@
+# Configuración principal de la aplicación
+app:
+  name: "XML to JSON Processor"
+  version: "1.0.0"
+  
+  # Configuración de endpoints
+  input:
+    path: "file:input?move=done&readLock=markerFile"
+    description: "Carpeta donde se depositan los archivos XML a procesar"
+  
+  output:
+    path: "file:output?fileName=${file:name.noext}.json"
+    description: "Carpeta donde se guardan los archivos JSON procesados"
+
+# Configuración de Spring Boot
+spring:
+  application:
+    name: xml-to-json-processor
+  banner:
+    location: classpath:banner.txt
+
+# Configuración de Camel
+camel:
+  springboot:
+    name: xml-to-json-processor
+    main-run-controller: true
+
+# Configuración de logging
+logging:
+  level:
+    com.example.camel: DEBUG
+    org.apache.camel: INFO
+    org.apache.camel.builder.AdviceWith: WARN
+    org.springframework: WARN
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"

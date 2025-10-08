@@ -1,0 +1,37 @@
+saludador:
+  informal:
+    plantilla:  Hola %s, qué más pues?
+    contador:   federico
+  formal:
+    plantilla:  Buenos días, %s. Un placer saludarle.
+
+# El mismo archivo en formato .properties
+
+# saludador.informal.plantilla=Hola %s, ¿qué más pues?
+# saludador.informal.contador=federico
+# saludador.formal.plantilla=Buenos días, %s. Un placer saludarle.
+# Configuración para el procesador BaconIpsum
+bacon:
+  ipsum:
+    url: "https://baconipsum.com/api/?type=all-meat&paras=3&format=text"
+    timeout:
+      conexion: 5  # segundos
+      lectura: 10  # segundos
+    # Configuración de proxy (opcional - para entornos corporativos)
+    proxy:
+      enabled: false
+      host: ""      # Ej: "proxy.empresa.com"
+      port: 0       # Ej: 8080
+      # usuario: ""   # Si requiere autenticación (pendiente implementar)
+      # password: ""  # Si requiere autenticación (pendiente implementar)
+
+# NOTA: Para activar el proxy, cambiar enabled a true y configurar host y port
+# Ejemplo para entorno corporativo:
+# bacon.ipsum.proxy.enabled=true
+# bacon.ipsum.proxy.host=proxy.empresa.com  
+# bacon.ipsum.proxy.port=8080
+
+camel:
+  springboot:
+    main-run-controller: true # Esto le indica a Spring que debe mantener la app en ejecución... 
+                              # que camel tiene configuradas rutas,... que se quedan corriendo como un servicio

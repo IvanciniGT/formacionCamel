@@ -1,0 +1,4 @@
+/Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/main/java/com/example/camel/CamelXmlToJsonApplication.java
+/Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/main/java/com/example/camel/model/Person.java
+/Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/main/java/com/example/camel/processor/PersonDataProcessor.java
+/Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/main/java/com/example/camel/routes/XmlToJsonTransformRoute.java

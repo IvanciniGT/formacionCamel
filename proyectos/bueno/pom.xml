@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.curso.camel</groupId>
+    <artifactId>bueno</artifactId>
+    <version>1.0.0</version>
+
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.boot.version>3.5.6</spring.boot.version>
+        <camel.version>4.10.7</camel.version>
+    </properties>
+    
+    <dependencyManagement>
+        <!-- 
+         Vamos a dar alta los BOM (Bill of Materials) para Spring y Camel 
+         Esto me permite usar librerías adicionales, usuales en el entorno Spring + Camel
+         sin necesidad de indicar la versión de cada una de ellas... 
+         Esas versiones se definen en los BOMs que importo... y se han creado asegurando 
+         que todas las versiones son compatibles entre sí.
+         -->
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-bom</artifactId>
+                <version>${camel.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.camel.springboot</groupId>
+                <artifactId>camel-spring-boot-bom</artifactId>
+                <version>${camel.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- Añadimos las dependencias que necesitamos usar-->
+    <dependencies>
+        <!-- Esto me añade las librerias necesarias de spring... las más básicas -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <!-- Librerías básicas de Camel, y su integración con Spring Boot -->
+        <dependency>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-spring-boot-starter</artifactId>
+        </dependency>
+        <!-- Lombok para facilitar la escritura / LECTURA DE CÓDIGO -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <!-- Añadimos los plugins que necesitamos usar -->
+    <build>
+        <plugins>
+            <!-- 
+            Esto me da la capacidad de ejecutar desde maven apps spring:
+              $ mvn spring-boot:run
+            -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>  
+    </build>
+    
+</project>
