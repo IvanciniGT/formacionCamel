@@ -1,6 +1,6 @@
 package com.curso.camel.marshal;
 
-import org.apache.camel.test.junit5.params.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,15 +11,21 @@ import org.apache.camel.component.jacksonxml.JacksonXMLDataFormat;
 
 import java.util.List;
 
-import com.curso.camel.model.PersonaOut;
+import com.curso.camel.model.PersonaOutImpl;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 
+import org.apache.camel.test.spring.junit5.CamelSpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import com.curso.camel.integration.AplicacionDePruebas;
+
+@CamelSpringBootTest
+@SpringBootTest(classes = { AplicacionDePruebas.class})// Ejecutar una aplicación Spring Boot para pruebas de integración en paralelo con las pruebas.
 
 @ExtendWith(MockitoExtension.class)
 class PersonaOutAXMLTest {
 
-    @Mock private PersonaOut personaOut;
+    private PersonaOutImpl personaOut;
 
     @Test
     void probarQueUnaPersonaSeConvierteAdecuadamenteAXML() throws Exception {
@@ -27,7 +33,7 @@ class PersonaOutAXMLTest {
         // La convierto a XML mediante el marshal
 
         var transformador = new JacksonXMLDataFormat();
-        transformador.setUnmarshalType(PersonaOut.class);
+        transformador.setUnmarshalType(PersonaOutImpl.class);
         
         // Queremos mandar ese objeto al transformador
         // El objeto nos debe devolver XML
@@ -45,26 +51,24 @@ class PersonaOutAXMLTest {
     }
 
     void configurarPersona() {
-        when(personaOut.getId()).thenReturn("1");
-        when(personaOut.getDNI()).thenReturn("12345678Z");
-        when(personaOut.getNombre()).thenReturn("Pepe");
-        when(personaOut.getEdad()).thenReturn(30);
-        when(personaOut.getDireccion()).thenReturn(new PersonaOut.Direccion() {
-            public String getCalle() { return "Calle Falsa 123"; }
-            public void setCalle(String calle) {}
-            public String getCiudad() { return "Springfield"; }
-            public void setCiudad(String ciudad) {}
-            public String getCodigoPostal() { return "28080"; }
-            public void setCodigoPostal(String codigoPostal) {}
-            public String getPais() { return "USA"; }
-            public void setPais(String pais) {}
-        });
-        when(personaOut.getDatosContacto()).thenReturn(new PersonaOut.DatosContacto() {
-            public List<String> getTelefonos() { return List.of("123456789", "987654321"); }
-            public void setTelefonos(java.util.List<String> telefonos) {}
-            public List<String> getEmails() { return List.of("pepe@example.com", "pepe@gmail.com"); }
-            public void setEmails(List<String> emails) {}   
-        });
+        var datosContacto = new PersonaOutImpl.DatosContactoImpl(
+            List.of("123456789", "987654321"),
+            List.of("pepe@example.com", "pepe@gmail.com")
+        );
+        var direccion = new PersonaOutImpl.DireccionImpl(
+            "Calle Falsa 123",
+            "Springfield",
+            "12345",
+            "USA"
+        );
+        personaOut = new PersonaOutImpl(
+            "1",
+            "12345678A",
+            "Pepe",
+            30,
+            direccion,
+            datosContacto
+        );
     }
     
 }

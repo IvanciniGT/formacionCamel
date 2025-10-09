@@ -6,6 +6,7 @@
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/mapper/PersonaIn2PersonaOutMapper.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/model/PersonaIn.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/model/PersonaOut.java
+/Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/model/PersonaOutImpl.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/processor/dni/DNIProcessor.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/processor/dni/DNIProcessorImpl.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/processor/dni/DNIUtils.java
