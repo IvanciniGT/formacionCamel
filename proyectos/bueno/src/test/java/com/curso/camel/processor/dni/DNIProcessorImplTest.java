@@ -11,7 +11,6 @@ import com.curso.camel.model.PersonaIn;
 
 import static org.mockito.Mockito.*;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;

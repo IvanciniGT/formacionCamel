@@ -1,23 +1,27 @@
 package com.example.camel.routes;
 
 import org.apache.camel.CamelContext;
+import org.apache.camel.EndpointInject;
 import org.apache.camel.ProducerTemplate;
+import org.apache.camel.builder.AdviceWith;
+import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.spring.junit5.CamelSpringBootTest;
+import org.apache.camel.test.spring.junit5.UseAdviceWith;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
- * Test de integración para demostrar filtros con beans en rutas Camel.
- * 
- * IMPORTANTE: Para ejecutar estos tests, asegúrate de tener archivos XML
- * de ejemplo en las carpetas correspondientes o usar ProducerTemplate
- * para enviar datos directamente a las rutas.
+ * Test de integración REAL para filtros con beans en rutas Camel.
+ * Usa MockEndpoints para verificaciones concretas, no "revisar logs".
  */
 @CamelSpringBootTest
 @SpringBootTest
 @ActiveProfiles("test")
+@UseAdviceWith
 class PersonFilterIntegrationTest {
     
     @Autowired
@@ -26,10 +30,21 @@ class PersonFilterIntegrationTest {
     @Autowired
     private ProducerTemplate producerTemplate;
     
+    @EndpointInject("mock:result")
+    private MockEndpoint mockResult;
+    
     @Test
-    void shouldDemonstrateBasicFilters() throws Exception {
-        // Given - XML de ejemplo con diferentes tipos de personas
-        String adultValidXml = """
+    void shouldFilterAdultsCorrectly() throws Exception {
+        // Given - Modificar la ruta para usar mock endpoint
+        AdviceWith.adviceWith(camelContext, "filter-with-beans", route -> {
+            route.weaveAddLast().to("mock:result");
+        });
+        camelContext.start();
+        
+        // Configurar expectativas del mock
+        mockResult.expectedMessageCount(1); // Solo 1 mensaje debería pasar todos los filtros
+        
+        String adultValidVipXml = """
             <?xml version="1.0" encoding="UTF-8"?>
             <Person>
                 <id>123</id>
@@ -56,140 +71,124 @@ class PersonFilterIntegrationTest {
             </Person>
             """;
         
-        // When - Enviar a la ruta de filtros básicos
-        System.out.println("\\n=== TEST: Filtros Básicos ===");
+        // When - Enviar 3 mensajes pero solo 1 debería pasar
+        producerTemplate.sendBody("direct:filter-demo", adultValidVipXml); // ✓ Pasa
+        producerTemplate.sendBody("direct:filter-demo", minorXml); // ✗ Bloqueado por isAdult
+        producerTemplate.sendBody("direct:filter-demo", invalidXml); // ✗ Bloqueado por isValidForProcessing
         
-        // El adulto VIP válido debería pasar todos los filtros
-        producerTemplate.sendBody("direct:filter-demo", adultValidXml);
+        // Then - Verificar que SOLO el adulto VIP válido llegó al final
+        mockResult.assertIsSatisfied();
         
-        // El menor no debería pasar el filtro de adultos
-        producerTemplate.sendBody("direct:filter-demo", minorXml);
-        
-        // La persona inválida no debería pasar el primer filtro
-        producerTemplate.sendBody("direct:filter-demo", invalidXml);
-        
-        // Then - Verificar en los logs que solo el adulto VIP llegó al final
-        Thread.sleep(1000); // Dar tiempo para procesamiento
+        String resultJson = mockResult.getExchanges().get(0).getIn().getBody(String.class);
+        assertNotNull(resultJson);
+        assertTrue(resultJson.contains("María José González"));
     }
     
     @Test
-    void shouldDemonstrateParameterizedFilters() throws Exception {
-        // Given - Personas en diferentes rangos de edad
-        String youngAdultXml = """
-            <?xml version="1.0" encoding="UTF-8"?>
-            <Person>
-                <id>789</id>
-                <name>Carlos Joven</name>
-                <age>28</age>
-            </Person>
-            """;
+    void shouldFilterByAgeRange() throws Exception {
+        // Given
+        AdviceWith.adviceWith(camelContext, "filter-with-parameters", route -> {
+            route.weaveAddLast().to("mock:rangeResult");
+        });
+        camelContext.start();
         
-        String middleAgeXml = """
-            <?xml version="1.0" encoding="UTF-8"?>
-            <Person>
-                <id>101</id>
-                <name>Laura Adulta</name>
-                <age>45</age>
-            </Person>
-            """;
+        MockEndpoint mockRangeResult = camelContext.getEndpoint("mock:rangeResult", MockEndpoint.class);
+        mockRangeResult.expectedMessageCount(2); // Solo 2 de 3 deberían pasar
         
-        String seniorXml = """
-            <?xml version="1.0" encoding="UTF-8"?>
-            <Person>
-                <id>102</id>
-                <name>Roberto Senior</name>
-                <age>70</age>
-            </Person>
-            """;
+        String youngAdultXml = createPersonXml("789", "Carlos Joven", 28); // ✓ Pasa (25-65)
+        String middleAgeXml = createPersonXml("101", "Laura Adulta", 45); // ✓ Pasa (25-65)
+        String seniorXml = createPersonXml("102", "Roberto Senior", 70); // ✗ No pasa (>65)
         
-        // When - Enviar a filtros con parámetros (rango 25-65)
-        System.out.println("\\n=== TEST: Filtros con Parámetros ===");
+        // When
+        producerTemplate.sendBody("direct:filter-with-params", youngAdultXml);
+        producerTemplate.sendBody("direct:filter-with-params", middleAgeXml);
+        producerTemplate.sendBody("direct:filter-with-params", seniorXml);
         
-        producerTemplate.sendBody("direct:filter-with-params", youngAdultXml); // Debería pasar
-        producerTemplate.sendBody("direct:filter-with-params", middleAgeXml); // Debería pasar
-        producerTemplate.sendBody("direct:filter-with-params", seniorXml); // NO debería pasar (70 > 65)
-        
-        Thread.sleep(1000);
+        // Then
+        mockRangeResult.assertIsSatisfied();
+        assertEquals(2, mockRangeResult.getReceivedCounter(), 
+                    "Solo 2 personas en el rango 25-65 deberían pasar");
     }
     
     @Test
-    void shouldDemonstrateHeaderBasedFilters() throws Exception {
-        // Given - XML con headers de archivo
-        String personXml = """
-            <?xml version="1.0" encoding="UTF-8"?>
-            <Person>
-                <id>999</id>
-                <name>Persona Prioritaria</name>
-                <age>35</age>
-            </Person>
-            """;
+    void shouldFilterByPriorityHeader() throws Exception {
+        // Given
+        AdviceWith.adviceWith(camelContext, "filter-with-headers", route -> {
+            route.weaveAddLast().to("mock:priorityResult");
+        });
+        camelContext.start();
         
-        // When - Enviar con diferentes headers de archivo
-        System.out.println("\\n=== TEST: Filtros con Headers ===");
+        MockEndpoint mockPriorityResult = camelContext.getEndpoint("mock:priorityResult", MockEndpoint.class);
+        mockPriorityResult.expectedMessageCount(1); // Solo archivo prioritario pasa
         
-        // Archivo prioritario - debería pasar
+        String personXml = createPersonXml("999", "Persona Prioritaria", 35);
+        
+        // When - Enviar con diferentes headers
         producerTemplate.sendBodyAndHeader("direct:filter-with-headers", 
                                           personXml, 
                                           "CamelFileName", 
-                                          "urgent_data.xml");
+                                          "urgent_data.xml"); // ✓ Pasa (prioritario)
         
-        // Archivo regular - NO debería pasar
         producerTemplate.sendBodyAndHeader("direct:filter-with-headers", 
                                           personXml, 
                                           "CamelFileName", 
-                                          "regular_data.xml");
+                                          "regular_data.xml"); // ✗ No pasa (no prioritario)
         
-        // Archivo de test - NO debería pasar por el filtro de Exchange
         producerTemplate.sendBodyAndHeader("direct:filter-with-headers", 
                                           personXml, 
                                           "CamelFileName", 
-                                          "test_data.xml");
+                                          "test_data.xml"); // ✗ No pasa (archivo de test)
         
-        Thread.sleep(1000);
+        // Then
+        mockPriorityResult.assertIsSatisfied();
+        String resultJson = mockPriorityResult.getExchanges().get(0).getIn().getBody(String.class);
+        assertTrue(resultJson.contains("Persona Prioritaria"));
     }
     
     @Test
-    void shouldDemonstrateStatefulFilters() throws Exception {
-        // Given - Múltiples personas para probar filtros con estado
-        String[] persons = {
-            createPersonXml("P1", "Persona Uno", 20),
-            createPersonXml("P2", "Persona Dos", 25),
-            createPersonXml("P3", "Persona Tres", 30),
-            createPersonXml("P4", "Persona Cuatro", 35),
-            createPersonXml("P5", "Persona Cinco", 40),
-            createPersonXml("P6", "Persona Seis", 45)
-        };
+    void shouldRouteByAgeGroupAfterFilter() throws Exception {
+        // Given
+        AdviceWith.adviceWith(camelContext, "combined-filters-choice", route -> {
+            route.interceptSendToEndpoint("direct:senior-processing")
+                 .skipSendToOriginalEndpoint()
+                 .to("mock:seniors");
+            route.interceptSendToEndpoint("direct:adult-processing")
+                 .skipSendToOriginalEndpoint()
+                 .to("mock:adults");
+            route.interceptSendToEndpoint("direct:minor-processing")
+                 .skipSendToOriginalEndpoint()
+                 .to("mock:minors");
+        });
+        camelContext.start();
         
-        // When - Enviar múltiples personas a filtros con estado
-        System.out.println("\\n=== TEST: Filtros con Estado ===");
+        MockEndpoint mockSeniors = camelContext.getEndpoint("mock:seniors", MockEndpoint.class);
+        MockEndpoint mockAdults = camelContext.getEndpoint("mock:adults", MockEndpoint.class);
+        MockEndpoint mockMinors = camelContext.getEndpoint("mock:minors", MockEndpoint.class);
         
-        for (String personXml : persons) {
-            producerTemplate.sendBody("direct:stateful-filters", personXml);
-            Thread.sleep(100); // Pequeña pausa entre envíos
-        }
+        mockSeniors.expectedMessageCount(1);
+        mockAdults.expectedMessageCount(1);
+        mockMinors.expectedMessageCount(1);
+        // El inválido (sin nombre) no llega a ningún destino (filtrado antes)
         
-        Thread.sleep(2000); // Tiempo para ver todos los resultados
-    }
-    
-    @Test
-    void shouldDemonstrateCombinedFiltersAndChoice() throws Exception {
-        // Given - Personas de diferentes edades
-        String[] testPersons = {
-            createPersonXml("MINOR1", "Ana Menor", 15),
-            createPersonXml("ADULT1", "Carlos Adulto", 35),
-            createPersonXml("SENIOR1", "María Senior", 70),
-            createPersonXml("INVALID1", "", 25) // Nombre inválido
-        };
+        // When
+        producerTemplate.sendBody("direct:combined-filters", 
+                                 createPersonXml("MINOR1", "Ana Menor", 15));
+        producerTemplate.sendBody("direct:combined-filters", 
+                                 createPersonXml("ADULT1", "Carlos Adulto", 35));
+        producerTemplate.sendBody("direct:combined-filters", 
+                                 createPersonXml("SENIOR1", "María Senior", 70));
+        producerTemplate.sendBody("direct:combined-filters", 
+                                 createPersonXml("INVALID1", "", 25)); // Nombre inválido
         
-        // When - Enviar a la ruta combinada
-        System.out.println("\\n=== TEST: Filtros Combinados + Choice ===");
+        // Then
+        mockSeniors.assertIsSatisfied();
+        mockAdults.assertIsSatisfied();
+        mockMinors.assertIsSatisfied();
         
-        for (String personXml : testPersons) {
-            producerTemplate.sendBody("direct:combined-filters", personXml);
-            Thread.sleep(200);
-        }
-        
-        Thread.sleep(1000);
+        // Verificar contenido
+        assertTrue(mockSeniors.getExchanges().get(0).getIn().getBody(String.class).contains("María"));
+        assertTrue(mockAdults.getExchanges().get(0).getIn().getBody(String.class).contains("Carlos"));
+        assertTrue(mockMinors.getExchanges().get(0).getIn().getBody(String.class).contains("Ana"));
     }
     
     /**
@@ -207,40 +206,52 @@ class PersonFilterIntegrationTest {
     }
     
     @Test
-    void shouldShowFilterUsageExamples() {
-        System.out.println("""
-            
-            ═══════════════════════════════════════════════════════════════
-                        EJEMPLOS DE USO DE FILTROS CON BEANS
-            ═══════════════════════════════════════════════════════════════
-            
-            1. FILTRO BÁSICO:
-               .filter().method(PersonFilterBean.class, "isAdult")
-            
-            2. FILTRO CON PARÁMETROS:
-               .filter().method(PersonFilterBean.class, "isInAgeRange(${body}, 25, 65)")
-            
-            3. FILTRO CON HEADERS:
-               .filter().method(PersonFilterBean.class, "isPriorityFile(${body}, ${header.CamelFileName})")
-            
-            4. FILTRO CON EXCHANGE COMPLETO:
-               .filter().method(PersonFilterBean.class, "isValidExchange")
-            
-            5. FILTRO CON ESTADO:
-               .filter().method(StatefulPersonFilter.class, "everyThirdPerson")
-            
-            6. COMBINADO CON CHOICE:
-               .filter().method(PersonFilterBean.class, "isValidForProcessing")
-               .choice()
-                   .when().method(PersonFilterBean.class, "isSenior")
-                       // Procesamiento para seniors
-                   .when().method(PersonFilterBean.class, "isAdult")
-                       // Procesamiento para adultos
-                   .otherwise()
-                       // Procesamiento para menores
-               .end()
-            
-            ═══════════════════════════════════════════════════════════════
-            """);
+    void shouldDocumentFilterUsagePatterns() {
+        // Este es un test de documentación que siempre pasa
+        // pero muestra claramente cómo usar los filtros
+        
+        String basicFilterUsage = """
+            // FILTRO BÁSICO:
+            .filter().method(PersonFilterBean.class, "isAdult")
+            """;
+        
+        String parameterizedFilterUsage = """
+            // FILTRO CON PARÁMETROS:
+            .filter().method(PersonFilterBean.class, "isInAgeRange(${body}, 25, 65)")
+            """;
+        
+        String headerFilterUsage = """
+            // FILTRO CON HEADERS:
+            .filter().method(PersonFilterBean.class, 
+                           "isPriorityFile(${body}, ${header.CamelFileName})")
+            """;
+        
+        String combinedUsage = """
+            // COMBINACIÓN DE FILTRO + CHOICE:
+            .filter().method(PersonFilterBean.class, "isValidForProcessing")
+            .choice()
+                .when().method(PersonFilterBean.class, "isSenior")
+                    // Procesamiento para seniors
+                .when().method(PersonFilterBean.class, "isAdult")
+                    // Procesamiento para adultos
+                .otherwise()
+                    // Procesamiento para menores
+            .end()
+            """;
+        
+        // Assertions para que el test sea válido
+        assertNotNull(basicFilterUsage, "Ejemplo básico debe estar documentado");
+        assertNotNull(parameterizedFilterUsage, "Ejemplo con parámetros debe estar documentado");
+        assertNotNull(headerFilterUsage, "Ejemplo con headers debe estar documentado");
+        assertNotNull(combinedUsage, "Ejemplo combinado debe estar documentado");
+        
+        assertTrue(basicFilterUsage.contains("isAdult"), 
+                  "Ejemplo básico debe mostrar método de filtro");
+        assertTrue(parameterizedFilterUsage.contains("isInAgeRange"), 
+                  "Ejemplo parametrizado debe mostrar parámetros");
+        assertTrue(headerFilterUsage.contains("CamelFileName"), 
+                  "Ejemplo con headers debe mostrar uso de headers");
+        assertTrue(combinedUsage.contains("choice"), 
+                  "Ejemplo combinado debe mostrar integración con choice");
     }
 }

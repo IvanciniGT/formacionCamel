@@ -71,6 +71,11 @@
             <groupId>org.apache.camel.springboot</groupId>
             <artifactId>camel-jackson-starter</artifactId>
         </dependency>
+        <!-- Jackson XML para camel... para conversiones a XML  -->
+        <dependency>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-jacksonxml-starter</artifactId>
+        </dependency>
         <!-- Metemos librerias para soporte de pruebas automatizadas -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -89,6 +94,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
             </plugin>
         </plugins>  
     </build>

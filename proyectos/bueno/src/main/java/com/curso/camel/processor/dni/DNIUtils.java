@@ -1,9 +1,5 @@
 package com.curso.camel.processor.dni;
 
-import org.springframework.stereotype.Component;
-import org.apache.camel.Processor;
-import org.apache.camel.Exchange;
-
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 

@@ -1,6 +1,8 @@
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/Aplicacion.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/filter/SoloDNIsValidos.java
+/Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/filter/SoloDNIsValidosImpl.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/filter/SoloEmailsValidos.java
+/Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/filter/SoloEmailsValidosImpl.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/mapper/PersonaIn2PersonaOutMapper.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/model/PersonaIn.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/model/PersonaOut.java
@@ -8,5 +10,9 @@
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/processor/dni/DNIProcessorImpl.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/processor/dni/DNIUtils.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/processor/edad/EdadProcessor.java
+/Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/processor/edad/EdadProcessorImpl.java
+/Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/processor/edad/EdadUtils.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/processor/email/EmailProcessor.java
+/Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/processor/email/EmailProcessorImpl.java
+/Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/processor/email/EmailUtils.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/route/Ruta1BBDD2Kafka.java
