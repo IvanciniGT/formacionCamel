@@ -11,6 +11,10 @@ public class DNIProcessorImpl implements DNIProcessor {
     @Override
     public void process(Exchange exchange) throws Exception {
         PersonaIn personaIn = exchange.getIn().getBody(PersonaIn.class);
+        if( personaIn == null  || personaIn.getDNI() == null ) {
+            exchange.setProperty(DNIProcessor.DNI_PROCESSOR_EXCHANGE_PROPERTY_NAME, false);
+            return;
+        }
         String dni = personaIn.getDNI();
         boolean esValido = DNIUtils.esDNIValido( dni );
         exchange.setProperty(DNIProcessor.DNI_PROCESSOR_EXCHANGE_PROPERTY_NAME, esValido);

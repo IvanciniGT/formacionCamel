@@ -1,0 +1,5 @@
+
+camel:
+  springboot:
+    main-run-controller: true # Esto le indica a Spring que debe mantener la app en ejecución... 
+                              # que camel tiene configuradas rutas,... que se quedan corriendo como un servicio

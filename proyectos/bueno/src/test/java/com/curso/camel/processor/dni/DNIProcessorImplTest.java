@@ -6,6 +6,7 @@ import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.support.DefaultExchange;
 import org.apache.camel.Exchange;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.curso.camel.model.PersonaIn;
 
@@ -100,5 +101,31 @@ class DNIProcessorTest {
         assertTrue(exchange.getProperties().containsKey(DNIProcessor.DNI_PROCESSOR_EXCHANGE_PROPERTY_NAME));
         assertEquals(Boolean.FALSE, exchange.getProperty(DNIProcessor.DNI_PROCESSOR_EXCHANGE_PROPERTY_NAME));
     }
+
+    @Test
+    void mensajeSinPersonaIn() throws Exception {
+        // Poner en el cuerpo del mensaje un objeto que no sea PersonaIn
+        exchange.getIn().setBody(null);
+        // Proceso el exchange
+        dniProcessor.process(exchange);
+        // Espero que en las propiedades del exchange exista la propiedad dniValido
+        assertTrue(exchange.getProperties().containsKey(DNIProcessor.DNI_PROCESSOR_EXCHANGE_PROPERTY_NAME));
+        // Y que esa propiedad sea false
+        assertEquals(Boolean.FALSE, exchange.getProperty(DNIProcessor.DNI_PROCESSOR_EXCHANGE_PROPERTY_NAME));
+    }
+    
+    @Test
+    void mensajeConPersonaInCuyoDNIEsNull() throws Exception {
+        // Poner en el cuerpo del mensaje un objeto PersonaIn cuyo DNI es null
+        when(personaIn.getDNI()).thenReturn(null);
+        // Proceso el exchange
+        dniProcessor.process(exchange);
+        // Espero que en las propiedades del exchange exista la propiedad dniValido
+        assertTrue(exchange.getProperties().containsKey(DNIProcessor.DNI_PROCESSOR_EXCHANGE_PROPERTY_NAME));
+        // Y que esa propiedad sea false
+        assertEquals(Boolean.FALSE, exchange.getProperty(DNIProcessor.DNI_PROCESSOR_EXCHANGE_PROPERTY_NAME));
+    }
+
+
 
 }

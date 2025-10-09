@@ -1,5 +1,8 @@
 /Users/ivan/formacionCamel/proyectos/bueno/src/test/java/com/curso/camel/filter/SoloDNIsValidosTest.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/test/java/com/curso/camel/filter/SoloEmailsValidosTest.java
+/Users/ivan/formacionCamel/proyectos/bueno/src/test/java/com/curso/camel/integration/AplicacionDePruebas.java
+/Users/ivan/formacionCamel/proyectos/bueno/src/test/java/com/curso/camel/integration/DNIFilterAndProcessorIntegrationTest.java
+/Users/ivan/formacionCamel/proyectos/bueno/src/test/java/com/curso/camel/integration/RutaParaPruebas.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/test/java/com/curso/camel/processor/dni/DNIProcessorImplTest.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/test/java/com/curso/camel/processor/dni/DNIUtilsTest.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/test/java/com/curso/camel/processor/edad/EdadProcessorTest.java

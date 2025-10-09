@@ -11,6 +11,11 @@ public class EmailProcessorImpl implements EmailProcessor {
     @Override
     public void process(Exchange exchange) throws Exception {
         PersonaIn personaIn = exchange.getIn().getBody(PersonaIn.class);
+        if( personaIn == null  || personaIn.getEmail() == null ) {
+            exchange.setProperty(EmailProcessor.EMAIL_PROCESSOR_EXCHANGE_PROPERTY_NAME, false);
+            return;
+        }
+        // TODO : Añadir pruebas para email nulo, o persona nula
         String email = personaIn.getEmail();
         boolean esValido = EmailUtils.esEmailValido( email );
         exchange.setProperty(EmailProcessor.EMAIL_PROCESSOR_EXCHANGE_PROPERTY_NAME, esValido);
