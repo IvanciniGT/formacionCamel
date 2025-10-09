@@ -15,6 +15,8 @@ import org.apache.camel.component.jacksonxml.JacksonXMLDataFormat;
 @Component
 public class Ruta1BBDD2Kafka extends RouteBuilder {
 
+    public static final String RUTA_ID = "ruta1-bbdd2kafka";
+
     private final String origen;
     private final String destino;
 
@@ -29,6 +31,8 @@ public class Ruta1BBDD2Kafka extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from(origen)                                                // Lee los registros de la base de datos
+            .routeId( RUTA_ID ) // Esto me permitirá referirme a la ruta por su id desde otros sitios.
+            // Esto es util para arrancar, parar, ver estadísticas, O EJECUTAR PRUEBAS de una ruta.
             .log("Registro leído de la base de datos: ${body}")
              // Qué tipo de dato tendremos en el Exchange en este punto: PersonaIn
             .bean( EdadProcessor.class          )                   // Calcula la edad y la añade una propiedad del exchange

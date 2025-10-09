@@ -1,6 +1,6 @@
 ruta1:
   origen: "EL QUE SEA"
-  destino: "EL QUE SEA"
+  destino: "kafka:{{kafka.topic.personas}}"
 
 camel:
   springboot:
