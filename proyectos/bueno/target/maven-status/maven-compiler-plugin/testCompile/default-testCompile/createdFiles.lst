@@ -1,0 +1,12 @@
+com/curso/camel/integration/RutaParaPruebas.class
+com/curso/camel/integration/DNIFilterAndProcessorIntegrationTest.class
+com/curso/camel/filter/SoloDNIsValidosTest.class
+com/curso/camel/filter/SoloEmailsValidosTest.class
+com/curso/camel/marshal/PersonaOutAXMLTest.class
+com/curso/camel/processor/dni/DNIProcessorTest.class
+com/curso/camel/integration/AplicacionDePruebas.class
+com/curso/camel/processor/dni/DNIUtilsTest.class
+com/curso/camel/processor/email/EmailProcessorTest.class
+com/curso/camel/processor/email/EmailUtilsTest.class
+com/curso/camel/processor/edad/EdadUtilsTest.class
+com/curso/camel/processor/edad/EdadProcessorTest.class

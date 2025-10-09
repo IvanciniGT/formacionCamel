@@ -2,8 +2,11 @@ package com.curso.camel.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,10 +18,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
 @AllArgsConstructor
 public class PersonaOutImpl implements PersonaOut {
     
-    @JacksonXmlProperty(localName = "Id")
+    @JacksonXmlProperty(localName = "id", isAttribute = true)
     private String id;
     @JacksonXmlProperty(localName = "DNI")
     private String DNI;
@@ -36,9 +40,13 @@ public class PersonaOutImpl implements PersonaOut {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class DireccionImpl implements Direccion {
+        @JacksonXmlProperty(localName = "Calle")
         private String calle;
+        @JacksonXmlProperty(localName = "Ciudad")
         private String ciudad;
+        @JacksonXmlProperty(localName = "CodigoPostal")
         private String codigoPostal;
+        @JacksonXmlProperty(localName = "Pais")
         private String pais;
     }
 
@@ -47,7 +55,11 @@ public class PersonaOutImpl implements PersonaOut {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class DatosContactoImpl implements DatosContacto {
+        @JacksonXmlElementWrapper(localName = "Telefonos")
+        @JacksonXmlProperty(localName = "Telefono")
         private List<String> telefonos;
+        @JacksonXmlElementWrapper(localName = "Emails")
+        @JacksonXmlProperty(localName = "Email")
         private List<String> emails;
     }
 }

@@ -1,7 +1,10 @@
 package com.curso.camel.integration;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.curso.camel.model.PersonaIn;
@@ -44,6 +47,12 @@ class DNIFilterAndProcessorIntegrationTest {
     // Solo es una pista a JUNIT para que ese parametro se lo pida a Spring
     public DNIFilterAndProcessorIntegrationTest(@Autowired ProducerTemplate producerTemplate) {
         this.producerTemplate = producerTemplate;
+    }
+
+    @BeforeEach
+    void setUp() {
+        // Resetear el MockEndpoint antes de cada test para que no acumule mensajes
+        mockResult.reset();
     }
 
     @Test

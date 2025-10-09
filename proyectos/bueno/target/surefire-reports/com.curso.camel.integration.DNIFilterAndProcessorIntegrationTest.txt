@@ -1,28 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.curso.camel.integration.DNIFilterAndProcessorIntegrationTest
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.649 s <<< FAILURE! -- in com.curso.camel.integration.DNIFilterAndProcessorIntegrationTest
-com.curso.camel.integration.DNIFilterAndProcessorIntegrationTest.mandarMensajeConPersonaConDNIInvalido -- Time elapsed: 0.036 s <<< FAILURE!
-java.lang.AssertionError: mock://result Received message count. Expected: <0> but was: <1>
-	at org.apache.camel.component.mock.MockEndpoint.fail(MockEndpoint.java:2015)
-	at org.apache.camel.component.mock.MockEndpoint.assertEquals(MockEndpoint.java:1950)
-	at org.apache.camel.component.mock.MockEndpoint.doAssertIsSatisfied(MockEndpoint.java:447)
-	at org.apache.camel.component.mock.MockEndpoint.assertIsSatisfied(MockEndpoint.java:431)
-	at org.apache.camel.component.mock.MockEndpoint.assertIsSatisfied(MockEndpoint.java:421)
-	at com.curso.camel.integration.DNIFilterAndProcessorIntegrationTest.mandarMensajeConPersonaConDNIInvalido(DNIFilterAndProcessorIntegrationTest.java:92)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-
-com.curso.camel.integration.DNIFilterAndProcessorIntegrationTest.mandarMensajeSinPersona -- Time elapsed: 0.024 s <<< FAILURE!
-java.lang.AssertionError: mock://result Received message count. Expected: <0> but was: <1>
-	at org.apache.camel.component.mock.MockEndpoint.fail(MockEndpoint.java:2015)
-	at org.apache.camel.component.mock.MockEndpoint.assertEquals(MockEndpoint.java:1950)
-	at org.apache.camel.component.mock.MockEndpoint.doAssertIsSatisfied(MockEndpoint.java:447)
-	at org.apache.camel.component.mock.MockEndpoint.assertIsSatisfied(MockEndpoint.java:431)
-	at org.apache.camel.component.mock.MockEndpoint.assertIsSatisfied(MockEndpoint.java:421)
-	at com.curso.camel.integration.DNIFilterAndProcessorIntegrationTest.mandarMensajeSinPersona(DNIFilterAndProcessorIntegrationTest.java:77)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.581 s -- in com.curso.camel.integration.DNIFilterAndProcessorIntegrationTest

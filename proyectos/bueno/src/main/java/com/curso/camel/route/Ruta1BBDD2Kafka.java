@@ -41,4 +41,9 @@ public class Ruta1BBDD2Kafka extends RouteBuilder {
             .log("Mensaje XML a enviar a Kafka: ${body}")
             .to(      destino                        );             // Envía el mensaje a Kafka
     }
+
+    // Pruebas de integración necesarias:
+    // - ProcesadorDNI -> FiltroDNI.      OK!
+    // - ProcesadorEmail -> FiltroEmail   TO DO
+    // - ProcesadorEdad -> Mapeador.      TO DO
 }

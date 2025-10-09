@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+
+    <!-- Elemento raíz: Persona -->
+    <xs:element name="Persona" type="PersonaType"/>
+
+    <!-- Tipo complejo para Persona -->
+    <xs:complexType name="PersonaType">
+        <xs:sequence>
+            <xs:element name="DNI" type="xs:string"/>
+            <xs:element name="Nombre" type="xs:string"/>
+            <xs:element name="Edad" type="xs:int"/>
+            <xs:element name="Direccion" type="DireccionType"/>
+            <xs:element name="DatosContacto" type="DatosContactoType"/>
+        </xs:sequence>
+        <!-- Id como atributo -->
+        <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <!-- Tipo complejo para Dirección -->
+    <xs:complexType name="DireccionType">
+        <xs:sequence>
+            <xs:element name="Calle" type="xs:string"/>
+            <xs:element name="Ciudad" type="xs:string"/>
+            <xs:element name="CodigoPostal" type="xs:string"/>
+            <xs:element name="Pais" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Tipo complejo para DatosContacto -->
+    <xs:complexType name="DatosContactoType">
+        <xs:sequence>
+            <xs:element name="Telefonos" type="TelefonosType" minOccurs="0"/>
+            <xs:element name="Emails" type="EmailsType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Tipo para la lista de teléfonos -->
+    <xs:complexType name="TelefonosType">
+        <xs:sequence>
+            <xs:element name="Telefono" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Tipo para la lista de emails -->
+    <xs:complexType name="EmailsType">
+        <xs:sequence>
+            <xs:element name="Email" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
