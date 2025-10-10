@@ -21,7 +21,7 @@ import com.curso.camel.processor.edad.EdadProcessor;
 class PersonaIn2PersonaOutTest {
     
     // Constantes para datos de prueba
-    private static final String ID = "1";
+    private static final Long ID = 1L;
     private static final String DNI = "12345678A";
     private static final String NOMBRE = "Juan Pérez";
     private static final String CALLE = "Calle Mayor 123";

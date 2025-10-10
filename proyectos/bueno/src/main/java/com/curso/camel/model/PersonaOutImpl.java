@@ -23,7 +23,7 @@ import lombok.Setter;
 public class PersonaOutImpl implements PersonaOut {
     
     @JacksonXmlProperty(localName = "id", isAttribute = true)
-    private String id;
+    private Long id;
     @JacksonXmlProperty(localName = "DNI")
     private String DNI;
     @JacksonXmlProperty(localName = "Nombre")

@@ -1,8 +1,30 @@
 ruta1:
-  origen: "EL QUE SEA"
-  destino: "kafka:{{kafka.topic.personas}}"
+  origen: jpa:com.curso.camel.model.PersonaInImpl?consumeDelete=true&delay=5000&initialDelay=1000&consumeLockEntity=false&maximumResults=100"
+  destino: "log:mensaje?showAll=true&multiline=true"
 
 camel:
   springboot:
     main-run-controller: true # Esto le indica a Spring que debe mantener la app en ejecución... 
                               # que camel tiene configuradas rutas,... que se quedan corriendo como un servicio
+
+# Datos de conexión a la BBDD
+spring:
+  datasource:
+    url:                jdbc:h2:mem:personasdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name:  org.h2.Driver
+    username:           sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update # update, create, create-drop, validate, none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+  sql:
+    init:
+      mode: always
+      #platform: h2
+      #schema-locations: classpath:/db/h2/schema-h2.sql
+      #data-locations: classpath:/db/h2/data-h2.sql

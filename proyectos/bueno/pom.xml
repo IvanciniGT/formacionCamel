@@ -57,11 +57,27 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
+        </dependency>        
+        <!-- Esto me añade las librerias necesarias para trabajar con bases de datos -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <!-- Añadimos la BBDD H2 para jugar un poco. Tendremos que cambiarla-->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <!-- Librerías básicas de Camel, y su integración con Spring Boot -->
         <dependency>
             <groupId>org.apache.camel.springboot</groupId>
             <artifactId>camel-spring-boot-starter</artifactId>
+        </dependency>
+        <!-- Componente de camel para trabajar con JPA -->
+        <dependency>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-jpa-starter</artifactId>
         </dependency>
         <!-- Lombok para facilitar la escritura / LECTURA DE CÓDIGO -->
         <dependency>

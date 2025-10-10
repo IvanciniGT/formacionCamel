@@ -19,6 +19,7 @@ com/curso/camel/processor/dni/DNIProcessor.class
 com/curso/camel/model/PersonaOutImpl$DireccionImpl.class
 com/curso/camel/filter/SoloEmailsValidosImpl.class
 com/curso/camel/processor/edad/EdadUtils.class
+com/curso/camel/model/PersonaInImpl.class
 com/curso/camel/filter/SoloEmailsValidos.class
 com/curso/camel/mapper/PersonaIn2PersonaOutMapper$PersonaInToPersonaOutMapStructImpl.class
 com/curso/camel/filter/SoloDNIsValidosImpl.class

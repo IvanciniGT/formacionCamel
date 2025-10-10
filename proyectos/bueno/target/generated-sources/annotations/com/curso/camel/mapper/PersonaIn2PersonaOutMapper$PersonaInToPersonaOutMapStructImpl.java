@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-10-09T13:59:59+0200",
+    date = "2025-10-10T09:58:04+0200",
     comments = "version: 1.6.3, compiler: javac, environment: Java 21.0.8 (Oracle Corporation)"
 )
 @Component
@@ -21,11 +21,11 @@ class PersonaIn2PersonaOutMapper$PersonaInToPersonaOutMapStructImpl implements P
 
         PersonaOutImpl personaOutImpl = new PersonaOutImpl();
 
+        personaOutImpl.setDireccion( mapDireccion( personaIn ) );
+        personaOutImpl.setDatosContacto( mapDatosContacto( personaIn ) );
         personaOutImpl.setId( personaIn.getId() );
         personaOutImpl.setDNI( personaIn.getDNI() );
         personaOutImpl.setNombre( personaIn.getNombre() );
-        personaOutImpl.setDireccion( mapDireccion( personaIn ) );
-        personaOutImpl.setDatosContacto( mapDatosContacto( personaIn ) );
 
         return personaOutImpl;
     }

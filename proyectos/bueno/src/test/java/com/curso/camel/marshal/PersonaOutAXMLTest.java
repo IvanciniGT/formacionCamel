@@ -82,7 +82,7 @@ class PersonaOutAXMLTest {
             "USA"
         );
         personaOut = new PersonaOutImpl(
-            "1",
+            1L,
             "12345678A",
             "Pepe",
             30,

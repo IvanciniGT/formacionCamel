@@ -5,6 +5,7 @@
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/filter/SoloEmailsValidosImpl.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/mapper/PersonaIn2PersonaOutMapper.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/model/PersonaIn.java
+/Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/model/PersonaInImpl.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/model/PersonaOut.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/model/PersonaOutImpl.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/processor/dni/DNIProcessor.java

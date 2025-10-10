@@ -5,8 +5,8 @@ import java.util.List;
 /* Los datos que voy a despachar */
 public interface PersonaOut {
     
-    String getId();
-    void setId(String id);
+    Long getId();
+    void setId(Long id);
     
     String getDNI();
     void setDNI(String dni);

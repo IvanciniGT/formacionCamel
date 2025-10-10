@@ -4,8 +4,8 @@ import java.time.LocalDate;
 
 /* Los datos que me van a llegar para su procesamiento y despacho */
 public interface PersonaIn {
-    String getId();
-    void setId(String id);
+    Long getId();
+    void setId(Long id);
     
     String getDNI();
     void setDNI(String dni);

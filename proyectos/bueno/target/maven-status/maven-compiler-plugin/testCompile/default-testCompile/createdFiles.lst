@@ -6,6 +6,7 @@ com/curso/camel/marshal/PersonaOutAXMLTest.class
 com/curso/camel/processor/dni/DNIProcessorTest.class
 com/curso/camel/integration/AplicacionDePruebas.class
 com/curso/camel/processor/dni/DNIUtilsTest.class
+com/curso/camel/casisistema/PruebaRutaCompletaTest.class
 com/curso/camel/processor/email/EmailProcessorTest.class
 com/curso/camel/processor/email/EmailUtilsTest.class
 com/curso/camel/processor/edad/EdadUtilsTest.class
