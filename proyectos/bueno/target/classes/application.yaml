@@ -11,13 +11,12 @@ camel:
 # Datos de conexión a la BBDD
 spring:
   datasource: # Ahora mariadb
-    url:                #jdbc:mariadb://18.202.220.100:3307/db
-                        jdbc:h2:mem:personasdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    driver-class-name:  #org.mariadb.jdbc.Driver
-                        org.h2.Driver
-    username:           #usuario
-                        sa
-    password:           #password
+    url:                jdbc:mariadb://18.202.220.100:3307/db #jdbc:h2:mem:personasdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE #jdbc:mariadb://18.202.220.100:3307/db
+    driver-class-name:  org.mariadb.jdbc.Driver #org.h2.Driver
+                        
+    username:           usuario #sa
+                        
+    password:           password # (vacío)
   jpa:
     hibernate:
       ddl-auto: update # update, create, create-drop, validate, none
@@ -25,8 +24,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        dialect:  #org.hibernate.dialect.MariaDBDialect
-                  org.hibernate.dialect.H2Dialect
+        dialect:  org.hibernate.dialect.MariaDBDialect #org.hibernate.dialect.H2Dialect
+                  
   sql:
     init:
       mode: always

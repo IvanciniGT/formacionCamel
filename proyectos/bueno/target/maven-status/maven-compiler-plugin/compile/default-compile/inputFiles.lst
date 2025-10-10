@@ -1,5 +1,8 @@
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/Aplicacion.java
+/Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/aggregator/AgregadorDeEdades.java
+/Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/aggregator/AgregadorDeEdadesImpl.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/filter/SoloDNIsValidos.java
+/Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/filter/SoloDNIsValidosConExcepcionImpl.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/filter/SoloDNIsValidosImpl.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/filter/SoloEmailsValidos.java
 /Users/ivan/formacionCamel/proyectos/bueno/src/main/java/com/curso/camel/filter/SoloEmailsValidosImpl.java
