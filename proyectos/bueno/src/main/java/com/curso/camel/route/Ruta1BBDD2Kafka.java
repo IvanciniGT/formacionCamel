@@ -73,6 +73,7 @@ public class Ruta1BBDD2Kafka extends RouteBuilder {
             .end() // Este end es un JOIN de los dos hilos de ejecución
             .log("Mensaje XML enviado a Todos los destinos"); // Este no se ejecuta hasta que ambos envíos han terminado
             */
+        
         from(origen)
             .routeId( RUTA_ID ) 
             .transacted()
@@ -89,29 +90,22 @@ public class Ruta1BBDD2Kafka extends RouteBuilder {
                     */
                     // POdría pasarnos, como es nuestro caso, en un filtro o en un to
             .bean( DNIProcessor.class           )
-            .filter().method( SoloDNIsValidos.class, "matches" )
-            //.onException(IllegalArgumentException.class) 
-             // Aqui es donde puedo darle un tratamiento especial a la excepción
-            //        .log("Ha habido un error en el procesamiento del DNI: ${exception.message}")
-                    // Podríamos llevarlo a otro sistema (cola seda, kafka, BBDD, fichero...)
-            //        .markRollbackOnly() // Con esto le digo que la transacción tiene que hacer rollback
-            //        .handled(true) // Con esto le digo que la excepción ya está tratada
-                    // handled(false) // Con esto le digo que la excepción aunque le he dado un tratamiento, no está resuelta
-                    // POdría pasarnos, como es nuestro caso, en un filtro o en un to
-            //.doTry()
-                //
+            // Manejamos la excepción solo para el filtro con doTry/doCatch
+            .doTry()
+                .filter().method( SoloDNIsValidos.class, "matches" )
                 .to("seda:procesamientoPosterior") // Desacoplo la lectura de la BBDD del resto de procesamiento
-                                                        // Esto me permite que la lectura de la BBDD no se vea afectada por el tiempo que tarden
-                                                        // Ahi se genera una cola interna en memoria (seda)
-                                                        // Si después del seda pusieramos algo, 
-                                                        // ese algo se ejecutaría una vez que el seda haya terminado de encolar el mensaje
-                                                        // Seda nos sirve para dejar algo en una cola... y que de ahí se consuma cuando se pueda
-                                                        // De forma ya independiente del productor
-                //.end()
-            //.doCatch(IllegalArgumentException.class)
-            //    .log("Ha habido un error en el procesamiento del DNI: ${exception.message}")
-            //    .markRollbackOnly()
-            .end()
+                                                    // Esto me permite que la lectura de la BBDD no se vea afectada por el tiempo que tarden
+                                                    // Ahi se genera una cola interna en memoria (seda)
+                                                    // Si después del seda pusieramos algo, 
+                                                    // ese algo se ejecutaría una vez que el seda haya terminado de encolar el mensaje
+                                                    // Seda nos sirve para dejar algo en una cola... y que de ahí se consuma cuando se pueda
+                                                    // De forma ya independiente del productor
+            .endDoTry()
+            .doCatch(IllegalArgumentException.class)
+                .log("ERROR: DNI no válido - ${exception.message}")
+                // Podríamos enviar a una cola de errores: .to("seda:errores")
+                .markRollbackOnly() // Marcamos la transacción para rollback
+            .end() // Cierra el doTry
             .log("Mensaje encolado en seda: ${body}"); // Este log se ejecutaría inmediatamente después del encolado
 
         from("seda:procesamientoPosterior")
