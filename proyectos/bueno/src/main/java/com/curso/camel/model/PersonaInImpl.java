@@ -18,7 +18,7 @@ import jakarta.persistence.GenerationType;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity         // Esto es una entidad persistible en BBDD
-@Table(name = "PERSONAS") // Nombre de la tabla en la BBDD
+@Table(name = "PERSONAS_IVAN") // Nombre de la tabla en la BBDD
 public class PersonaInImpl implements PersonaIn {
 
     @Id

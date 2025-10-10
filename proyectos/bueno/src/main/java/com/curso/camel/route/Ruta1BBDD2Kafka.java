@@ -19,13 +19,16 @@ public class Ruta1BBDD2Kafka extends RouteBuilder {
 
     private final String origen;
     private final String destino;
+    private final String destino2;
 
     public Ruta1BBDD2Kafka( 
         @Value("${ruta1.origen}") String origen, 
-        @Value("${ruta1.destino}") String destino
+        @Value("${ruta1.destino}") String destino,
+        @Value("${ruta1.destino2}") String destino2
     ) {
         this.origen = origen;
         this.destino = destino;
+        this.destino2 = destino2;
     }
 
     @Override
@@ -43,7 +46,8 @@ public class Ruta1BBDD2Kafka extends RouteBuilder {
             .bean( PersonaIn2PersonaOutMapper.class )               // Convierte PersonaIn a PersonaOut // MAPEADOR
             .marshal( new JacksonXMLDataFormat() )                  // Convierte el body a XML
             .log("Mensaje XML a enviar a Kafka: ${body}")
-            .to(      destino                        );             // Envía el mensaje a Kafka
+            .to(      destino                        )             // Envía el mensaje a Kafka
+            .to(      destino2                        );             // Envía el mensaje a Kafka
     }
 
     // Pruebas de integración necesarias:
