@@ -1,2 +1,6 @@
 com/example/camel/routes/XmlToJsonTransformRouteTest.class
 com/example/camel/processor/PersonDataProcessorTest.class
+com/example/camel/model/PersonTest.class
+com/example/camel/filter/PersonFilterBeanTest.class
+com/example/camel/routes/PersonFilterIntegrationTest.class
+com/example/camel/mapper/PersonMapperIntegrationTest.class

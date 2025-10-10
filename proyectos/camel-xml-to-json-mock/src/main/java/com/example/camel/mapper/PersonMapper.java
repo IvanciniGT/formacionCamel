@@ -1,6 +1,7 @@
 package com.example.camel.mapper;
 
 import com.example.camel.model.Person;
+import com.example.camel.model.PersonImpl;
 import com.example.camel.model.PersonEntity;
 import com.example.camel.model.PersonSummary;
 import org.mapstruct.Mapper;
@@ -26,18 +27,21 @@ public interface PersonMapper {
     /**
      * Convierte Person a PersonEntity
      * Mapeo directo de campos con mismo nombre
-     * Los campos de auditoría se inicializan en el constructor
+     * Los campos de auditoría se inicializan automáticamente
      */
+    @Mapping(source = "id", target = "externalId")
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true) 
     @Mapping(target = "status", ignore = true)
     PersonEntity personToEntity(Person person);
     
     /**
-     * Convierte PersonEntity a Person
+     * Convierte PersonEntity a PersonImpl (implementación concreta)
      * Mapeo inverso para leer desde base de datos
      */
-    Person entityToPerson(PersonEntity entity);
+    @Mapping(source = "externalId", target = "id")
+    PersonImpl entityToPerson(PersonEntity entity);
     
     /**
      * Convierte Person a PersonSummary
@@ -72,6 +76,8 @@ public interface PersonMapper {
     /**
      * Mapeo con transformación personalizada del nombre
      */
+    @Mapping(source = "id", target = "externalId")
+    @Mapping(target = "id", ignore = true)
     @Mapping(source = "name", target = "name", qualifiedByName = "formatName")
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true) 

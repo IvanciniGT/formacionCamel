@@ -18,6 +18,35 @@ spring:
     name: xml-to-json-processor
   banner:
     location: classpath:banner.txt
+  
+  # Configuración de base de datos (H2 en memoria para desarrollo)
+  datasource:
+    url: jdbc:h2:mem:persondb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+    
+  # Configuración JPA/Hibernate
+  jpa:
+    hibernate:
+      ddl-auto: create-drop # create-drop: recrear en cada inicio | update: actualizar schema | validate: solo validar
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true # Para ejecutar data.sql después de crear tablas
+  
+  # Consola H2 (útil para development - acceder en http://localhost:8080/h2-console)
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  
+  # Inicialización de datos
+  sql:
+    init:
+      mode: always # Ejecutar siempre data.sql y schema.sql
 
 # Configuración de Camel
 camel:

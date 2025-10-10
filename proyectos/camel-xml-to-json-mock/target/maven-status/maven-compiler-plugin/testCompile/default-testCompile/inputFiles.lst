@@ -1,2 +1,6 @@
+/Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/test/java/com/example/camel/filter/PersonFilterBeanTest.java
+/Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/test/java/com/example/camel/mapper/PersonMapperIntegrationTest.java
+/Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/test/java/com/example/camel/model/PersonTest.java
 /Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/test/java/com/example/camel/processor/PersonProcessorTest.java
+/Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/test/java/com/example/camel/routes/PersonFilterIntegrationTest.java
 /Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/test/java/com/example/camel/routes/XmlToJsonRouteTest.java

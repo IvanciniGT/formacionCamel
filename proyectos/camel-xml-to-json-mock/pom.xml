@@ -85,6 +85,40 @@
       <version>1.6.3</version>
       <scope>provided</scope>
     </dependency>
+    
+    <!-- JPA y Base de Datos -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    
+    <!-- Driver de H2 (base de datos en memoria para desarrollo/testing) -->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    
+    <!-- Driver de PostgreSQL (comentado, descomenta para usar PostgreSQL) -->
+    <!--
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    -->
+    
+    <!-- Camel JPA para integración con JPA en rutas -->
+    <dependency>
+      <groupId>org.apache.camel.springboot</groupId>
+      <artifactId>camel-jpa-starter</artifactId>
+    </dependency>
+    
+    <!-- Camel SQL para queries SQL directas (opcional) -->
+    <dependency>
+      <groupId>org.apache.camel.springboot</groupId>
+      <artifactId>camel-sql-starter</artifactId>
+    </dependency>
 
     <!-- Test con Camel + Spring Boot + JUnit 5 -->
     <dependency>

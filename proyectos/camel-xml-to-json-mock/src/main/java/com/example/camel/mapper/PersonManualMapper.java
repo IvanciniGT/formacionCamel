@@ -2,6 +2,7 @@ package com.example.camel.mapper;
 
 import com.example.camel.model.Person;
 import com.example.camel.model.PersonEntity;
+import com.example.camel.model.PersonStatus;
 import com.example.camel.model.PersonSummary;
 import org.springframework.stereotype.Component;
 
@@ -28,7 +29,10 @@ public class PersonManualMapper {
         }
         
         PersonEntity entity = new PersonEntity();
-        entity.setId(person.getId());
+        // No seteamos el ID aquí, lo genera la BD
+        if (person.getId() != null && person.getId() instanceof String) {
+            entity.setExternalId((String) person.getId());
+        }
         entity.setName(cleanAndFormatName(person.getName()));
         entity.setAge(person.getAge());
         entity.setCreatedAt(LocalDateTime.now());
@@ -47,7 +51,7 @@ public class PersonManualMapper {
         }
         
         return Person.create(
-            entity.getId(),
+            entity.getExternalId() != null ? entity.getExternalId() : String.valueOf(entity.getId()),
             entity.getName(),
             entity.getAge()
         );
@@ -109,14 +113,14 @@ public class PersonManualMapper {
         return result.toString().trim();
     }
     
-    private String determineStatus(Person person) {
+    private PersonStatus determineStatus(Person person) {
         if (person.getName() == null || person.getName().trim().isEmpty()) {
-            return "INCOMPLETE";
+            return PersonStatus.INCOMPLETE;
         }
         if (person.getAge() == null || person.getAge() < 0) {
-            return "INVALID";
+            return PersonStatus.INVALID;
         }
-        return "ACTIVE";
+        return PersonStatus.ACTIVE;
     }
     
     private String formatIdentifier(String id) {

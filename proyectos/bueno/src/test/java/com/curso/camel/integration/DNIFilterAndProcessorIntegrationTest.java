@@ -2,10 +2,9 @@ package com.curso.camel.integration;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.curso.camel.model.PersonaIn;
 
@@ -21,6 +20,7 @@ import static org.mockito.Mockito.when;
 // Que camel le mande información a Spring y a JUNIT
 @CamelSpringBootTest
 @SpringBootTest(classes = { AplicacionDePruebas.class})// Ejecutar una aplicación Spring Boot para pruebas de integración en paralelo con las pruebas.
+@ActiveProfiles("test-integration") // Activar el perfil para cargar RutaParaPruebas
 // El equivalente a esto en la app real:
 /*    
     public static void main(String[] args) {

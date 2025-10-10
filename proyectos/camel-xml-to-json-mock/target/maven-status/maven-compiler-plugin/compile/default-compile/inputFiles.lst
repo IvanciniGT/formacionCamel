@@ -1,4 +1,17 @@
 /Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/main/java/com/example/camel/CamelXmlToJsonApplication.java
+/Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/main/java/com/example/camel/filter/PersonFilterBean.java
+/Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/main/java/com/example/camel/filter/StatefulPersonFilter.java
+/Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/main/java/com/example/camel/mapper/PersonManualMapper.java
+/Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/main/java/com/example/camel/mapper/PersonMapper.java
 /Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/main/java/com/example/camel/model/Person.java
+/Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/main/java/com/example/camel/model/PersonBuilder.java
+/Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/main/java/com/example/camel/model/PersonEntity.java
+/Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/main/java/com/example/camel/model/PersonImpl.java
+/Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/main/java/com/example/camel/model/PersonStatus.java
+/Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/main/java/com/example/camel/model/PersonSummary.java
 /Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/main/java/com/example/camel/processor/PersonDataProcessor.java
+/Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/main/java/com/example/camel/repository/PersonRepository.java
+/Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/main/java/com/example/camel/routes/DatabaseRoute.java
+/Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/main/java/com/example/camel/routes/PersonMapperRoute.java
 /Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/main/java/com/example/camel/routes/XmlToJsonTransformRoute.java
+/Users/ivan/formacionCamel/proyectos/camel-xml-to-json-mock/src/main/java/com/example/camel/service/PersonService.java

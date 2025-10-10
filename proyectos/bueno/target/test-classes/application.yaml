@@ -1,3 +1,6 @@
+ruta1:
+  origen: "algo:algo"
+  destino: "otra:cosa"
 
 camel:
   springboot:
