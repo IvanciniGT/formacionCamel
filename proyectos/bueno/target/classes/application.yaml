@@ -7,16 +7,17 @@ camel:
   springboot:
     main-run-controller: true # Esto le indica a Spring que debe mantener la app en ejecución... 
                               # que camel tiene configuradas rutas,... que se quedan corriendo como un servicio
-
+  variable: 
+    iva: 0.21
 # Datos de conexión a la BBDD
 spring:
   datasource: # Ahora mariadb
-    url:                jdbc:mariadb://18.202.220.100:3307/db #jdbc:h2:mem:personasdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE #jdbc:mariadb://18.202.220.100:3307/db
-    driver-class-name:  org.mariadb.jdbc.Driver #org.h2.Driver
+    url:                jdbc:h2:mem:personasdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE #jdbc:mariadb://18.202.220.100:3307/db
+    driver-class-name:  org.h2.Driver #org.mariadb.jdbc.Driver
                         
-    username:           usuario #sa
+    username:           sa #usuario
                         
-    password:           password # (vacío)
+    password:           #password
   jpa:
     hibernate:
       ddl-auto: update # update, create, create-drop, validate, none
@@ -24,7 +25,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        dialect:  org.hibernate.dialect.MariaDBDialect #org.hibernate.dialect.H2Dialect
+        dialect:  org.hibernate.dialect.H2Dialect #org.hibernate.dialect.MariaDBDialect
                   
   sql:
     init:
@@ -32,3 +33,5 @@ spring:
       #platform: h2
       #schema-locations: classpath:/db/h2/schema-h2.sql
       #data-locations: classpath:/db/h2/data-h2.sql
+
+

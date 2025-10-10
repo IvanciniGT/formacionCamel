@@ -1,11 +1,13 @@
 package com.curso.camel.filter;
 
 import org.apache.camel.Exchange;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import com.curso.camel.processor.dni.DNIProcessor;
 
 @Component
+@Primary 
 public class SoloDNIsValidosImpl implements SoloDNIsValidos {
 
     @Override

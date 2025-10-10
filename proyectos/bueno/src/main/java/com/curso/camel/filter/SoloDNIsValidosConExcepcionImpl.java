@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import com.curso.camel.processor.dni.DNIProcessor;
 
 @Component
-@Primary // Esto no lo haríamos en un proyecto real..
+// Esto no lo haríamos en un proyecto real..
 // Si quiero que éste ahora sustituya al otro... El otro lo borro.
 // Y si el día de mañana me arrepiento? Para eso tengo git!
 // Con esto no funcionarían las pruebas como las tenemos definidas...

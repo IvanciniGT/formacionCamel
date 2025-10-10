@@ -3,6 +3,7 @@ package com.curso.camel.model;
 import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.Column;
@@ -19,6 +20,7 @@ import jakarta.persistence.GenerationType;
 @AllArgsConstructor
 @Entity         // Esto es una entidad persistible en BBDD
 @Table(name = "PERSONAS_IVAN") // Nombre de la tabla en la BBDD
+@Builder
 public class PersonaInImpl implements PersonaIn {
 
     @Id

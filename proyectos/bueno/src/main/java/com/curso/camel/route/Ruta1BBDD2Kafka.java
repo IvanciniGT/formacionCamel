@@ -39,7 +39,6 @@ public class Ruta1BBDD2Kafka extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        /* FUNCIONA GUAY CN LAS PRUEBAS
         from(origen)                                                // Lee los registros de la base de datos
             .routeId( RUTA_ID ) // Esto me permitirá referirme a la ruta por su id desde otros sitios.
             // Esto es util para arrancar, parar, ver estadísticas, O EJECUTAR PRUEBAS de una ruta.
@@ -72,8 +71,7 @@ public class Ruta1BBDD2Kafka extends RouteBuilder {
                 // Y Cada uno me tiene que dar confirmación... y entre tanto yo esperando como un tonto.
             .end() // Este end es un JOIN de los dos hilos de ejecución
             .log("Mensaje XML enviado a Todos los destinos"); // Este no se ejecuta hasta que ambos envíos han terminado
-            */
-        
+            /*        
         from(origen)
             .routeId( RUTA_ID ) 
             .transacted()
@@ -87,7 +85,6 @@ public class Ruta1BBDD2Kafka extends RouteBuilder {
                     .markRollbackOnly() // Con esto le digo que la transacción tiene que hacer rollback
                     .handled(true) // Con esto le digo que la excepción ya está tratada
                     // handled(false) // Con esto le digo que la excepción aunque le he dado un tratamiento, no está resuelta
-                    */
                     // POdría pasarnos, como es nuestro caso, en un filtro o en un to
             .bean( DNIProcessor.class           )
             // Manejamos la excepción solo para el filtro con doTry/doCatch
@@ -143,7 +140,7 @@ public class Ruta1BBDD2Kafka extends RouteBuilder {
             .completionSize(10) // Cada 10 mensajes que lleguen, saco el acumulado
             .completionTimeout(5000) // O si pasan 5 segundos desde que se inició la agregación, saco el acumulado
             .log("Acumulado de edades: ${exchangeProperty.sumaEdades}");
-
+*/
 
         // Lo que vamos a hacer ahora es ir sumando las edades de la gente que vamos leyendo
         // Como ejemplo es un sinsentido, para que quiero sumar edades de gente .
